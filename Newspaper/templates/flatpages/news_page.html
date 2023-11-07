@@ -1,0 +1,99 @@
+{%extends 'flatpages/default.html'%}
+{% load custom_filters %}
+
+{% block title%}
+News
+{%endblock title%}
+
+{% block content%}
+<h1>What's new today?</h1><br>
+
+{% if posts %}
+
+<!-- Перед таблицей добавим форму для поиска -->
+
+<form method="GET">
+    {{ filter.form }}
+    <input type="submit" value="Search">
+</form>
+
+<!-- Выводим только если есть посты с помощью тега if -->
+<table class="table">
+    <tr>
+        <th scope="col">
+            Автор
+        </th>
+        <th scope="col">
+            Название поста
+        </th>
+        <th scope="col">
+            Описание
+        </th>
+
+    </tr>
+
+
+    {% for post in filter.qs %}
+    <!-- Для каждого товара будете генерироваться новая строчка, т.е. новый html код. При этом сам цикл работает точно так же, как и в python. product — переменная цикла, т.е. наш товар, взятый из общего списка -->
+<tr>
+    <td>
+        <a href="{% url 'news:post_detail' post.id %}">
+        {{ post.title }}
+        </a>
+    </td>
+    <td>
+        {{ post.author }}
+            
+    </td>
+    <td>
+        {{ post.get_category_display|safe }}
+    </td>
+    <td>
+        {{ post.text }}
+        <!-- дописываем специальный фильтр, чтобы ограничить количество символов до 2 - первая буква + многоточие. -->
+    </td>
+    <td>
+        <a href="{% url 'news:post_update' product.id %}">
+            Update post
+        </a>
+        <a href="{% url 'news:post_delete' product.id %}">
+            Delete post
+        </a>
+    </td>  
+
+</tr>
+{% endfor %}
+</table>
+
+{% include 'fastfood/parts/paginator.html' %}
+
+{% else %}
+    <!-- Если постов нет, то сообщаем об этом пользователю  -->
+    <h2>No posts yet</h2>
+{% endif %}
+
+
+<form method="POST">
+    {% csrf_token %}
+    <label for="title" class="form-label">title</label>
+    <input name="title" id="title" type="text" class="form-control" >
+    <label for="text" class="form-label">Text</label>
+    <input name="text" id="text" class="form-control" type="text">
+    <label for="preview" class="form-label">Preview</label>
+    <input name="preview" class="form-control" id="preview" type="text">
+   
+    <!-- Здесь будет список категорий -->
+    <label for="select" class="form-label">Type</label>
+    <select name="category" id="select" class="form-select">
+        <option selected>Select category of a post</option>
+        {% for type in choices %}
+        <option value="{{ type.0 }}">
+            {{ type.1 }}
+        </option>
+        {% endfor %}
+    </select>
+    <input class="btn btn-success" type="submit" value="Add post">
+    <button type="submit" class="btn btn-primary">Subscribe</button>
+ </form>
+
+{% endblock content%}

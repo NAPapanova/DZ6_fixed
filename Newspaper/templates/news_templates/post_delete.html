@@ -1,0 +1,30 @@
+{% extends 'layout/base.html' %}
+
+
+{% block title %}
+Post delete
+{% endblock title %}
+
+{% block content %}
+
+<h3>Delete this post?</h3>
+<div class="card">
+ <div class="card-header">
+   <h3>
+     {{ post.title }}
+   </h3>
+   <div>
+     Text: <span class="badge bg-info">{{ post.text }}</span>
+     Category: <span class="badge bg-info">{{ post.get_category_display }}</span>
+   </div>
+ </div>
+ <div class="card-body">
+   {{ post.preview }}
+ </div>
+</div>
+<form method="POST">
+ {% csrf_token %}
+   <input class="btn btn-success" type="submit" value="Delete">
+</form>
+
+{% endblock content %}

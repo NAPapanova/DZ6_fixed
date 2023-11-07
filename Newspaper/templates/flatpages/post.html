@@ -1,0 +1,15 @@
+<!--  наследуемся от шаблона base.html -->
+{% extends 'layout/base.html' %} 
+ 
+<!-- Название у нас будет proudcts -->
+{% block title %}
+Post
+{% endblock title %}
+ 
+<!-- В контенте на странице мы выводим сам продукт, первичный ключ которого был передан в адрес -->
+{% block content %}
+<h1>
+    {{ post|<int> id }}
+    {{ post.created_at|date:"Y-m-d H:i" }}
+</h1>
+{% endblock content %}

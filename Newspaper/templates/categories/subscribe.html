@@ -1,0 +1,13 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+  {% if subscribed %}
+  <h4>Хотите ли вы подписаться на категорию {{category}} ?</h4>
+    <a href="{% url 'NewsPaper:subscribe' category.pk %}">Да</a>
+    <a href="{% url 'NewsPaper:news_page' %}">Нет</a>
+  {% else %}
+  <h4>Вы уже подписаны на категорию {{category}}.</h4>
+    <a href="{% url 'NewsPaper:news_page' %}">Обратно</a>
+  {% endif %}
+
+{% endblock content %}

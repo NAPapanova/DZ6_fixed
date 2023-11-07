@@ -1,0 +1,19 @@
+{% extends 'layout/base.html' %}
+
+
+{% block title %}
+CREATE POST
+{% endblock title %}
+
+{% block content %}
+
+<h3>Post details</h3>
+
+<form method="POST">
+ {% csrf_token %} # безопасность доступа
+ {{ form }} # добавляем форму для заполнения поста
+   <!-- Теперь нам нужна только готовая форма и кнопка -->
+   <input class="btn btn-success" type="submit" value="Add post">
+</form>
+
+{% endblock content %}

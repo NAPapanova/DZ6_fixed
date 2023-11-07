@@ -1,0 +1,11 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+<div>
+  <h4>Отподписаться от категории {{category}} ?</h4>
+  <div>
+    <a href="{% url 'Newspaper:unsubscribe' category.pk %}">Да</a>
+    <a href="{% url 'Newspaper:news_page' %}">Нет</a>
+  </div>
+</div>
+{% endblock content %}
